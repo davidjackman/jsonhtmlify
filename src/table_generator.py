@@ -414,6 +414,7 @@ if (document.readyState === 'loading') {
         return f"""<!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
 <title>{self._escape_html(title)}</title>
 {css_section}{sortable_styles}</head>
 <body>
