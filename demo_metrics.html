@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Key Metrics - Data Table</title>
+<style>
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #6c757d;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+        .help-text {
+            color: #6c757d;
+            font-style: italic;
+            margin-bottom: 15px;
+            background: #f8f9fa;
+            padding: 8px 12px;
+            border-radius: 4px;
+            border-left: 4px solid #4a90e2;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #e9ecef;
+            color: #7f8c8d;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .sortable tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+        
+</style>
+<style>
+/* Sortable table styles */
+.sortable th[data-sortable] {
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.2s ease;
+}
+
+.sortable th[data-sortable]:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.sortable th.sort-asc .sort-indicator::after {
+    content: ' ↑';
+    color: #fff;
+    font-weight: bold;
+    opacity: 1;
+}
+
+.sortable th.sort-desc .sort-indicator::after {
+    content: ' ↓';
+    color: #fff;
+    font-weight: bold;
+    opacity: 1;
+}
+
+.sortable th:not(.sort-asc):not(.sort-desc) .sort-indicator {
+    opacity: 0.5;
+}
+
+.sortable th.sort-asc,
+.sortable th.sort-desc {
+    filter: brightness(1.05);
+}
+</style></head>
+<body>
+
+            <div class="container">
+                <h1>📊 Key Metrics</h1>
+                <p class="subtitle">Generated from key_metrics.json</p>
+                <div class="table-section">
+                    <p class="help-text">💡 Click column headers to sort data</p>
+                    <table class="key_metrics-table sortable striped responsive">
+  <thead>
+    <tr>
+      <th>Description</th>
+      <th>Metric</th>
+      <th>Trend</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="even">
+      <td>Total quarterly revenue</td>
+      <td>Total Revenue</td>
+      <td>Up</td>
+      <td>$4.1M</td>
+    </tr>
+    <tr class="odd">
+      <td>Net profit after expenses</td>
+      <td>Net Profit</td>
+      <td>Up</td>
+      <td>$820K</td>
+    </tr>
+    <tr class="even">
+      <td>Profit margin percentage</td>
+      <td>Profit Margin</td>
+      <td>Stable</td>
+      <td>20.0%</td>
+    </tr>
+    <tr class="odd">
+      <td>Customer retention rate</td>
+      <td>Customer Retention</td>
+      <td>Up</td>
+      <td>94.5%</td>
+    </tr>
+    <tr class="even">
+      <td>Market share percentage</td>
+      <td>Market Share</td>
+      <td>Up</td>
+      <td>20.1%</td>
+    </tr>
+    <tr class="odd">
+      <td>Total employee count</td>
+      <td>Employee Count</td>
+      <td>Up</td>
+      <td>285</td>
+    </tr>
+    <tr class="even">
+      <td>Average customer satisfaction score</td>
+      <td>Customer Satisfaction</td>
+      <td>Stable</td>
+      <td>4.7/5</td>
+    </tr>
+    <tr class="odd">
+      <td>Year-over-year revenue growth</td>
+      <td>Revenue Growth</td>
+      <td>Up</td>
+      <td>+14%</td>
+    </tr>
+  </tbody>
+</table>
+                </div>
+                <div class="footer">
+                    <p>Generated on June 19, 2025 at 10:16 PM</p>
+                    <p>✨ Powered by HTML Table Generator</p>
+                </div>
+            </div>
+            
+<script>
+function sortTable(table, column, dataType = 'auto') {
+    const tbody = table.querySelector('tbody');
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+    const isAscending = table.dataset.sortDirection !== 'asc';
+    
+    // Determine data type if auto
+    if (dataType === 'auto') {
+        const sampleValue = rows[0]?.cells[column]?.textContent.trim();
+        if (sampleValue && !isNaN(sampleValue.replace(/[,$%]/g, ''))) {
+            dataType = 'number';
+        } else if (sampleValue && !isNaN(Date.parse(sampleValue))) {
+            dataType = 'date';
+        } else {
+            dataType = 'string';
+        }
+    }
+    
+    // Sort rows
+    rows.sort((a, b) => {
+        const aText = a.cells[column]?.textContent.trim() || '';
+        const bText = b.cells[column]?.textContent.trim() || '';
+        
+        let aVal, bVal;
+        
+        switch (dataType) {
+            case 'number':
+                aVal = parseFloat(aText.replace(/[,$%]/g, '')) || 0;
+                bVal = parseFloat(bText.replace(/[,$%]/g, '')) || 0;
+                break;
+            case 'date':
+                aVal = new Date(aText);
+                bVal = new Date(bText);
+                break;
+            default:
+                aVal = aText.toLowerCase();
+                bVal = bText.toLowerCase();
+        }
+        
+        if (aVal < bVal) return isAscending ? -1 : 1;
+        if (aVal > bVal) return isAscending ? 1 : -1;
+        return 0;
+    });
+    
+    // Update tbody with sorted rows
+    rows.forEach(row => tbody.appendChild(row));
+    
+    // Update sort direction
+    table.dataset.sortDirection = isAscending ? 'asc' : 'desc';
+    
+    // Update header indicators
+    const headers = table.querySelectorAll('th[data-sortable]');
+    headers.forEach((header, index) => {
+        header.classList.remove('sort-asc', 'sort-desc');
+        if (index === column) {
+            header.classList.add(isAscending ? 'sort-asc' : 'sort-desc');
+        }
+    });
+}
+
+function initializeSortableTables() {
+    document.querySelectorAll('table.sortable').forEach(table => {
+        const headers = table.querySelectorAll('th');
+        headers.forEach((header, index) => {
+            header.setAttribute('data-sortable', 'true');
+            header.style.cursor = 'pointer';
+            header.style.userSelect = 'none';
+            header.style.position = 'relative';
+            
+            // Add sort indicator
+            const indicator = document.createElement('span');
+            indicator.className = 'sort-indicator';
+            indicator.innerHTML = ' ↕️';
+            indicator.style.opacity = '0.5';
+            indicator.style.fontSize = '0.8em';
+            indicator.style.marginLeft = '5px';
+            header.appendChild(indicator);
+            
+            header.addEventListener('click', () => {
+                sortTable(table, index);
+            });
+        });
+    });
+}
+
+// Initialize when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeSortableTables);
+} else {
+    initializeSortableTables();
+}
+</script></body>
+</html>

@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Executive Dashboard - Multi-Table Report</title>
+<style>
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 20px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+    }
+    
+    .main-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 12px;
+        padding: 40px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+    
+    .document-header {
+        text-align: center;
+        margin-bottom: 40px;
+        padding-bottom: 20px;
+        border-bottom: 3px solid #e9ecef;
+    }
+    
+    .document-title {
+        font-size: 3em;
+        font-weight: 300;
+        color: #2c3e50;
+        margin-bottom: 10px;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    }
+    
+    .document-subtitle {
+        font-size: 1.2em;
+        color: #7f8c8d;
+        font-weight: 400;
+    }
+    
+    .table-section {
+        margin-bottom: 30px;
+        background: #f8f9fa;
+        border-radius: 8px;
+        padding: 20px;
+        border-left: 4px solid #28a745;
+    }
+    
+    .section-title {
+        color: #2c3e50;
+        font-size: 1.8em;
+        margin-bottom: 15px;
+        font-weight: 600;
+    }
+    
+    .table-container {
+        background: white;
+        border-radius: 6px;
+        padding: 15px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    /* Enhanced table styling */
+    .sales-table, .employee-table, .financial-table, .inventory-table, .project-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px;
+    }
+    
+    .sales-table th {
+        background: linear-gradient(135deg, #28a745, #20c997);
+        color: white;
+        padding: 12px;
+        text-align: left;
+        font-weight: 600;
+    }
+    
+    .employee-table th {
+        background: linear-gradient(135deg, #007bff, #0056b3);
+        color: white;
+        padding: 12px;
+        text-align: left;
+        font-weight: 600;
+    }
+    
+    .financial-table th {
+        background: linear-gradient(135deg, #fd7e14, #e55100);
+        color: white;
+        padding: 12px;
+        text-align: left;
+        font-weight: 600;
+    }
+    
+    .inventory-table th {
+        background: linear-gradient(135deg, #6610f2, #6f42c1);
+        color: white;
+        padding: 12px;
+        text-align: left;
+        font-weight: 600;
+    }
+    
+    .project-table th {
+        background: linear-gradient(135deg, #dc3545, #c82333);
+        color: white;
+        padding: 12px;
+        text-align: left;
+        font-weight: 600;
+    }
+    
+    .sales-table td, .employee-table td, .financial-table td, 
+    .inventory-table td, .project-table td {
+        padding: 10px 12px;
+        border-bottom: 1px solid #e9ecef;
+    }
+    
+    .sales-table.striped tr:nth-child(even),
+    .employee-table.striped tr:nth-child(even),
+    .inventory-table.striped tr:nth-child(even),
+    .project-table.striped tr:nth-child(even) {
+        background-color: #f8f9fa;
+    }
+    
+    .document-footer {
+        text-align: center;
+        margin-top: 40px;
+        padding-top: 20px;
+        border-top: 2px solid #e9ecef;
+        color: #6c757d;
+        font-style: italic;
+    }
+    
+    .stats-summary {
+        display: flex;
+        justify-content: space-around;
+        margin: 30px 0;
+        padding: 20px;
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        border-radius: 8px;
+    }
+    
+    .stat-item {
+        text-align: center;
+    }
+    
+    .stat-number {
+        font-size: 2em;
+        font-weight: bold;
+        color: #495057;
+    }
+    
+    .stat-label {
+        color: #6c757d;
+        font-size: 0.9em;
+    }
+    
+    /* Responsive design */
+    @media (max-width: 768px) {
+        .main-container {
+            padding: 20px;
+            margin: 10px;
+        }
+        
+        .document-title {
+            font-size: 2em;
+        }
+        
+        .stats-summary {
+            flex-direction: column;
+            gap: 15px;
+        }
+    }
+    
+</style>
+</head>
+<body>
+
+    <div class="main-container">
+        
+    <div class="document-header">
+        <h1 class="document-title">📊 Executive Dashboard</h1>
+        <p class="document-subtitle">Comprehensive Business Intelligence Report - June 2025</p>
+    </div>
+    
+    <div class="stats-summary">
+        <div class="stat-item">
+            <div class="stat-number">5</div>
+            <div class="stat-label">Data Sources</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">$1.05M</div>
+            <div class="stat-label">Total Revenue</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">25%</div>
+            <div class="stat-label">Profit Margin</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">5</div>
+            <div class="stat-label">Active Projects</div>
+        </div>
+    </div>
+    
+        <style>
+.sales-section {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin: 10px 0;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.sales-section summary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 15px 20px;
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 7px 7px 0 0;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.sales-section summary:hover {
+    background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+}
+
+.sales-section summary:focus {
+    outline: 2px solid #4c51bf;
+    outline-offset: 2px;
+}
+
+.sales-section[open] summary {
+    border-radius: 7px 7px 0 0;
+}
+
+.sales-section:not([open]) summary {
+    border-radius: 7px;
+}
+
+.collapsible-title {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.collapsible-icon {
+    font-size: 12px;
+    transition: transform 0.3s ease;
+}
+
+.sales-section[open] .collapsible-icon {
+    transform: rotate(180deg);
+}
+
+.collapsible-content {
+    padding: 0;
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        max-height: 0;
+    }
+    to {
+        opacity: 1;
+        max-height: 1000px;
+    }
+}
+
+.sales-section table {
+    margin: 0;
+    border-radius: 0;
+    border: none;
+}
+</style>
+<details class="sales-section" open>
+  <summary class="collapsible-header">
+    <span class="collapsible-title">📊 Q1 2025 Sales Performance</span>
+    <span class="collapsible-icon">▼</span>
+  </summary>
+  <div class="collapsible-content">
+    <table class="sales-table striped responsive">
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th>Growth Rate</th>
+      <th>Region</th>
+      <th>Units</th>
+      <th>Revenue ($)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="even">
+      <td>Laptops</td>
+      <td>+15%</td>
+      <td>North</td>
+      <td>245</td>
+      <td>$245,000</td>
+    </tr>
+    <tr class="odd">
+      <td>Accessories</td>
+      <td>+8%</td>
+      <td>North</td>
+      <td>1780</td>
+      <td>$89,000</td>
+    </tr>
+    <tr class="even">
+      <td>Laptops</td>
+      <td>+12%</td>
+      <td>South</td>
+      <td>189</td>
+      <td>$189,000</td>
+    </tr>
+    <tr class="odd">
+      <td>Software</td>
+      <td>+22%</td>
+      <td>South</td>
+      <td>312</td>
+      <td>$156,000</td>
+    </tr>
+    <tr class="even">
+      <td>Laptops</td>
+      <td>+18%</td>
+      <td>West</td>
+      <td>289</td>
+      <td>$289,000</td>
+    </tr>
+    <tr class="odd">
+      <td>Accessories</td>
+      <td>+7%</td>
+      <td>West</td>
+      <td>1900</td>
+      <td>$95,000</td>
+    </tr>
+  </tbody>
+</table>
+  </div>
+</details>
+
+<style>
+.employee-section {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin: 10px 0;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.employee-section summary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 15px 20px;
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 7px 7px 0 0;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.employee-section summary:hover {
+    background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+}
+
+.employee-section summary:focus {
+    outline: 2px solid #4c51bf;
+    outline-offset: 2px;
+}
+
+.employee-section[open] summary {
+    border-radius: 7px 7px 0 0;
+}
+
+.employee-section:not([open]) summary {
+    border-radius: 7px;
+}
+
+.collapsible-title {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.collapsible-icon {
+    font-size: 12px;
+    transition: transform 0.3s ease;
+}
+
+.employee-section[open] .collapsible-icon {
+    transform: rotate(180deg);
+}
+
+.collapsible-content {
+    padding: 0;
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        max-height: 0;
+    }
+    to {
+        opacity: 1;
+        max-height: 1000px;
+    }
+}
+
+.employee-section table {
+    margin: 0;
+    border-radius: 0;
+    border: none;
+}
+</style>
+<details class="employee-section" >
+  <summary class="collapsible-header">
+    <span class="collapsible-title">👥 Employee Performance Dashboard</span>
+    <span class="collapsible-icon">▼</span>
+  </summary>
+  <div class="collapsible-content">
+    <table class="employee-table sortable striped">
+  <thead>
+    <tr>
+      <th>Employee ID</th>
+      <th>Full Name</th>
+      <th>Rating</th>
+      <th>Annual Salary</th>
+      <th>Department</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="even">
+      <td>EMP001</td>
+      <td>Sarah Johnson</td>
+      <td>Excellent</td>
+      <td>125000</td>
+      <td>Engineering</td>
+    </tr>
+    <tr class="odd">
+      <td>EMP002</td>
+      <td>Mike Chen</td>
+      <td>Outstanding</td>
+      <td>135000</td>
+      <td>Product</td>
+    </tr>
+    <tr class="even">
+      <td>EMP003</td>
+      <td>Lisa Rodriguez</td>
+      <td>Excellent</td>
+      <td>115000</td>
+      <td>Design</td>
+    </tr>
+    <tr class="odd">
+      <td>EMP004</td>
+      <td>David Kim</td>
+      <td>Outstanding</td>
+      <td>145000</td>
+      <td>Engineering</td>
+    </tr>
+    <tr class="even">
+      <td>EMP005</td>
+      <td>Anna Petrov</td>
+      <td>Good</td>
+      <td>98000</td>
+      <td>Marketing</td>
+    </tr>
+  </tbody>
+</table>
+  </div>
+</details>
+
+<style>
+.financial-section {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin: 10px 0;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.financial-section summary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 15px 20px;
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 7px 7px 0 0;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.financial-section summary:hover {
+    background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+}
+
+.financial-section summary:focus {
+    outline: 2px solid #4c51bf;
+    outline-offset: 2px;
+}
+
+.financial-section[open] summary {
+    border-radius: 7px 7px 0 0;
+}
+
+.financial-section:not([open]) summary {
+    border-radius: 7px;
+}
+
+.collapsible-title {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.collapsible-icon {
+    font-size: 12px;
+    transition: transform 0.3s ease;
+}
+
+.financial-section[open] .collapsible-icon {
+    transform: rotate(180deg);
+}
+
+.collapsible-content {
+    padding: 0;
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        max-height: 0;
+    }
+    to {
+        opacity: 1;
+        max-height: 1000px;
+    }
+}
+
+.financial-section table {
+    margin: 0;
+    border-radius: 0;
+    border: none;
+}
+</style>
+<details class="financial-section" open>
+  <summary class="collapsible-header">
+    <span class="collapsible-title">💰 Financial Summary - Key Metrics</span>
+    <span class="collapsible-icon">▼</span>
+  </summary>
+  <div class="collapsible-content">
+    <table class="financial-table">
+  <thead>
+    <tr>
+      <th>Margin %</th>
+      <th>Net Profit</th>
+      <th>Op. Expenses</th>
+      <th>Return on Investment</th>
+      <th>Total Revenue (YTD)</th>
+      <th>Cash Flow</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>25.0%</td>
+      <td>$263,000</td>
+      <td>$789,000</td>
+      <td>18.5%</td>
+      <td>$1,052,000</td>
+      <td>$445,000</td>
+    </tr>
+  </tbody>
+</table>
+  </div>
+</details>
+
+<style>
+.inventory-section {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin: 10px 0;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.inventory-section summary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 15px 20px;
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 7px 7px 0 0;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.inventory-section summary:hover {
+    background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+}
+
+.inventory-section summary:focus {
+    outline: 2px solid #4c51bf;
+    outline-offset: 2px;
+}
+
+.inventory-section[open] summary {
+    border-radius: 7px 7px 0 0;
+}
+
+.inventory-section:not([open]) summary {
+    border-radius: 7px;
+}
+
+.collapsible-title {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.collapsible-icon {
+    font-size: 12px;
+    transition: transform 0.3s ease;
+}
+
+.inventory-section[open] .collapsible-icon {
+    transform: rotate(180deg);
+}
+
+.collapsible-content {
+    padding: 0;
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        max-height: 0;
+    }
+    to {
+        opacity: 1;
+        max-height: 1000px;
+    }
+}
+
+.inventory-section table {
+    margin: 0;
+    border-radius: 0;
+    border: none;
+}
+</style>
+<details class="inventory-section" >
+  <summary class="collapsible-header">
+    <span class="collapsible-title">📈 Product Inventory Status</span>
+    <span class="collapsible-icon">▼</span>
+  </summary>
+  <div class="collapsible-content">
+    <table class="inventory-table striped responsive">
+  <thead>
+    <tr>
+      <th>Product Code</th>
+      <th>Stock</th>
+      <th>Product Name</th>
+      <th>Reorder Level</th>
+      <th>Status</th>
+      <th>Category</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="even">
+      <td>PRD-001</td>
+      <td>45</td>
+      <td>ThinkPad X1 Carbon</td>
+      <td>20</td>
+      <td>In Stock</td>
+      <td>Laptops</td>
+    </tr>
+    <tr class="odd">
+      <td>PRD-002</td>
+      <td>230</td>
+      <td>Wireless Mouse Pro</td>
+      <td>50</td>
+      <td>In Stock</td>
+      <td>Accessories</td>
+    </tr>
+    <tr class="even">
+      <td>PRD-003</td>
+      <td>89</td>
+      <td>USB-C Hub 8-in-1</td>
+      <td>30</td>
+      <td>In Stock</td>
+      <td>Accessories</td>
+    </tr>
+    <tr class="odd">
+      <td>PRD-004</td>
+      <td>12</td>
+      <td>Webcam 4K Ultra</td>
+      <td>25</td>
+      <td>Low Stock</td>
+      <td>Electronics</td>
+    </tr>
+    <tr class="even">
+      <td>PRD-005</td>
+      <td>0</td>
+      <td>Keyboard Mechanical</td>
+      <td>15</td>
+      <td>Out of Stock</td>
+      <td>Accessories</td>
+    </tr>
+  </tbody>
+</table>
+  </div>
+</details>
+
+
+            <div class="table-section">
+                <h2 class="section-title">🎯 Project Status Overview</h2>
+                <div class="table-container">
+                    <table class="project-table striped responsive">
+  <thead>
+    <tr>
+      <th>Progress</th>
+      <th>Target Date</th>
+      <th>Project Name</th>
+      <th>Current Status</th>
+      <th>Project Lead</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="even">
+      <td>75%</td>
+      <td>2025-07-15</td>
+      <td>Website Redesign</td>
+      <td>In Progress</td>
+      <td>Sarah Johnson</td>
+    </tr>
+    <tr class="odd">
+      <td>25%</td>
+      <td>2025-08-30</td>
+      <td>Mobile App Launch</td>
+      <td>Planning</td>
+      <td>Mike Chen</td>
+    </tr>
+    <tr class="even">
+      <td>100%</td>
+      <td>2025-06-01</td>
+      <td>API Integration</td>
+      <td>Complete</td>
+      <td>David Kim</td>
+    </tr>
+    <tr class="odd">
+      <td>60%</td>
+      <td>2025-07-01</td>
+      <td>User Research</td>
+      <td>In Progress</td>
+      <td>Lisa Rodriguez</td>
+    </tr>
+    <tr class="even">
+      <td>15%</td>
+      <td>2025-09-15</td>
+      <td>Marketing Campaign</td>
+      <td>Planning</td>
+      <td>Anna Petrov</td>
+    </tr>
+  </tbody>
+</table>
+                </div>
+            </div>
+            
+        
+    <div class="document-footer">
+        <p>📈 Generated with HTML Table Generator v2.0 | 📅 June 19, 2025</p>
+        <p>This report contains live data from multiple business systems and is updated automatically.</p>
+    </div>
+    
+    </div>
+    
+</body>
+</html>

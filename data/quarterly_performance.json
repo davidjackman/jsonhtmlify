@@ -1,0 +1,76 @@
+{
+  "quarterly_performance": [
+    {
+      "quarter": "Q1 2024",
+      "revenue": 2100000,
+      "revenue_formatted": "$2.1M",
+      "profit": 420000,
+      "profit_formatted": "$420K",
+      "growth": 0.12,
+      "growth_formatted": "+12%",
+      "customers": 1250,
+      "market_share": 0.152,
+      "market_share_formatted": "15.2%"
+    },
+    {
+      "quarter": "Q2 2024",
+      "revenue": 2400000,
+      "revenue_formatted": "$2.4M",
+      "profit": 480000,
+      "profit_formatted": "$480K",
+      "growth": 0.14,
+      "growth_formatted": "+14%",
+      "customers": 1380,
+      "market_share": 0.161,
+      "market_share_formatted": "16.1%"
+    },
+    {
+      "quarter": "Q3 2024",
+      "revenue": 2800000,
+      "revenue_formatted": "$2.8M",
+      "profit": 560000,
+      "profit_formatted": "$560K",
+      "growth": 0.17,
+      "growth_formatted": "+17%",
+      "customers": 1520,
+      "market_share": 0.178,
+      "market_share_formatted": "17.8%"
+    },
+    {
+      "quarter": "Q4 2024",
+      "revenue": 3200000,
+      "revenue_formatted": "$3.2M",
+      "profit": 640000,
+      "profit_formatted": "$640K",
+      "growth": 0.15,
+      "growth_formatted": "+15%",
+      "customers": 1690,
+      "market_share": 0.185,
+      "market_share_formatted": "18.5%"
+    },
+    {
+      "quarter": "Q1 2025",
+      "revenue": 3600000,
+      "revenue_formatted": "$3.6M",
+      "profit": 720000,
+      "profit_formatted": "$720K",
+      "growth": 0.13,
+      "growth_formatted": "+13%",
+      "customers": 1840,
+      "market_share": 0.192,
+      "market_share_formatted": "19.2%"
+    },
+    {
+      "quarter": "Q2 2025",
+      "revenue": 4100000,
+      "revenue_formatted": "$4.1M",
+      "profit": 820000,
+      "profit_formatted": "$820K",
+      "growth": 0.14,
+      "growth_formatted": "+14%",
+      "customers": 2010,
+      "market_share": 0.201,
+      "market_share_formatted": "20.1%"
+    }
+  ]
+}

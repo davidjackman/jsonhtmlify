@@ -1,0 +1,1478 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Interactive Business Dashboard</title>
+<style>
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f2f5;
+            line-height: 1.6;
+        }
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            border-top: 4px solid #4a90e2;
+        }
+        .dashboard-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #4a90e2;
+        }
+        .dashboard-header h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        .dashboard-subtitle {
+            color: #6c757d;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+        .dashboard-timestamp {
+            color: #7f8c8d;
+            font-style: italic;
+        }
+        .dashboard-sections {
+            margin-bottom: 30px;
+        }
+        .dashboard-footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #e9ecef;
+            color: #7f8c8d;
+        }
+        .footer-info {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+        .footer-info span {
+            background: #f8f9fa;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.85em;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .sortable tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+        @media (max-width: 768px) {
+            .dashboard-container {
+                margin: 10px;
+                padding: 20px;
+            }
+            .footer-info {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+        }
+        
+</style>
+<style>
+/* Sortable table styles */
+.sortable th[data-sortable] {
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.2s ease;
+}
+
+.sortable th[data-sortable]:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.sortable th.sort-asc .sort-indicator::after {
+    content: ' ↑';
+    color: #fff;
+    font-weight: bold;
+    opacity: 1;
+}
+
+.sortable th.sort-desc .sort-indicator::after {
+    content: ' ↓';
+    color: #fff;
+    font-weight: bold;
+    opacity: 1;
+}
+
+.sortable th:not(.sort-asc):not(.sort-desc) .sort-indicator {
+    opacity: 0.5;
+}
+
+.sortable th.sort-asc,
+.sortable th.sort-desc {
+    filter: brightness(1.05);
+}
+</style></head>
+<body>
+
+        <div class="dashboard-container">
+            <div class="dashboard-header">
+                <h1>🏢 Interactive Business Dashboard</h1>
+                <p class="dashboard-subtitle">Generated from JSON Data Sources</p>
+                <div class="dashboard-timestamp">📅 Generated: June 19, 2025 at 10:13 PM</div>
+            </div>
+            
+            <div class="dashboard-sections">
+                <style>
+.product_performance-section {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin: 10px 0;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.product_performance-section summary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 15px 20px;
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 7px 7px 0 0;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.product_performance-section summary:hover {
+    background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+}
+
+.product_performance-section summary:focus {
+    outline: 2px solid #4c51bf;
+    outline-offset: 2px;
+}
+
+.product_performance-section[open] summary {
+    border-radius: 7px 7px 0 0;
+}
+
+.product_performance-section:not([open]) summary {
+    border-radius: 7px;
+}
+
+.collapsible-title {
+    font-size: 16px;
+    font-weight: 600;
+}        .collapsible-icon {
+            font-size: 12px;
+            transition: transform 0.3s ease;
+        }
+
+        /* Universal collapsible icon rotation for all sections */
+        details[open] .collapsible-icon {
+            transform: rotate(180deg);
+        }
+
+        /* Copy-to-JSON button styles */
+        .copy-json-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-left: 10px;
+            white-space: nowrap;
+        }
+
+        .copy-json-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .copy-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #28a745;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 1000;
+            opacity: 0;
+            transform: translateX(100px);
+            transition: all 0.3s ease;
+        }
+
+        .copy-notification.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .section-header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .section-title-group {
+            display: flex;
+            align-items: center;
+        }
+
+.collapsible-content {
+    padding: 0;
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        max-height: 0;
+    }
+    to {
+        opacity: 1;
+        max-height: 1000px;
+    }
+}
+
+.product_performance-section table {
+    margin: 0;
+    border-radius: 0;
+    border: none;
+}
+</style>
+<details class="product_performance-section" >
+  <summary class="collapsible-header">
+    <div class="section-header-content">
+      <div class="section-title-group">
+        <span class="collapsible-title">📊 Product Performance</span>
+      </div>
+      <div class="section-title-group">
+        <button class="copy-json-btn" onclick="copyProductPerformanceData()">📋 Copy JSON</button>
+        <span class="collapsible-icon">▼</span>
+      </div>
+    </div>
+  </summary>
+  <div class="collapsible-content">
+    <table class="product_performance-table sortable striped responsive">
+  <thead>
+    <tr>
+      <th style="background-color: #d9534f; color: white; padding: 12px; border: 1px solid #ddd;">category</th>
+      <th style="background-color: #d9534f; color: white; padding: 12px; border: 1px solid #ddd;">product</th>
+      <th style="background-color: #d9534f; color: white; padding: 12px; border: 1px solid #ddd;">margin_formatted</th>
+      <th style="background-color: #d9534f; color: white; padding: 12px; border: 1px solid #ddd;">rating_formatted</th>
+      <th style="background-color: #d9534f; color: white; padding: 12px; border: 1px solid #ddd;">rating</th>
+      <th style="background-color: #d9534f; color: white; padding: 12px; border: 1px solid #ddd;">revenue_formatted</th>
+      <th style="background-color: #d9534f; color: white; padding: 12px; border: 1px solid #ddd;">revenue</th>
+      <th style="background-color: #d9534f; color: white; padding: 12px; border: 1px solid #ddd;">margin</th>
+      <th style="background-color: #d9534f; color: white; padding: 12px; border: 1px solid #ddd;">target_market</th>
+      <th style="background-color: #d9534f; color: white; padding: 12px; border: 1px solid #ddd;">units</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="even">
+      <td style="padding: 10px; border: 1px solid #ddd;">Software</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Enterprise Software</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">42%</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">4.8/5</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">4.8</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">$1.5M</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">1500000</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">0.42</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Enterprise</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">850</td>
+    </tr>
+    <tr class="odd">
+      <td style="padding: 10px; border: 1px solid #ddd;">Services</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Cloud Services</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">38%</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">4.7/5</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">4.7</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">$1.2M</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">1200000</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">0.38</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">SMB</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">1200</td>
+    </tr>
+    <tr class="even">
+      <td style="padding: 10px; border: 1px solid #ddd;">Software</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Mobile Apps</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">35%</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">4.6/5</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">4.6</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">$800K</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">800000</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">0.35</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Consumer</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">2100</td>
+    </tr>
+    <tr class="odd">
+      <td style="padding: 10px; border: 1px solid #ddd;">Services</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Consulting</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">45%</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">4.9/5</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">4.9</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">$600K</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">600000</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">0.45</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Enterprise</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">120</td>
+    </tr>
+  </tbody>
+</table>
+  </div>
+</details><style>
+.quarterly_performance-section {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin: 10px 0;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.quarterly_performance-section summary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 15px 20px;
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 7px 7px 0 0;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.quarterly_performance-section summary:hover {
+    background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+}
+
+.quarterly_performance-section summary:focus {
+    outline: 2px solid #4c51bf;
+    outline-offset: 2px;
+}
+
+.quarterly_performance-section[open] summary {
+    border-radius: 7px 7px 0 0;
+}
+
+.quarterly_performance-section:not([open]) summary {
+    border-radius: 7px;
+}
+
+.collapsible-title {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+
+
+.collapsible-content {
+    padding: 0;
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        max-height: 0;
+    }
+    to {
+        opacity: 1;
+        max-height: 1000px;
+    }
+}
+
+.quarterly_performance-section table {
+    margin: 0;
+    border-radius: 0;
+    border: none;
+}
+</style>
+<details class="quarterly_performance-section" >
+  <summary class="collapsible-header">
+    <div class="section-header-content">
+      <div class="section-title-group">
+        <span class="collapsible-title">📊 Quarterly Performance</span>
+      </div>
+      <div class="section-title-group">
+        <button class="copy-json-btn" onclick="copyQuarterlyPerformanceData()">📋 Copy JSON</button>
+        <span class="collapsible-icon">▼</span>
+      </div>
+    </div>
+  </summary>
+  <div class="collapsible-content">
+    <table class="quarterly_performance-table sortable striped responsive">
+  <thead>
+    <tr>
+      <th style="background-color: #4a90e2; color: white; padding: 12px; border: 1px solid #ddd;">profit</th>
+      <th style="background-color: #4a90e2; color: white; padding: 12px; border: 1px solid #ddd;">customers</th>
+      <th style="background-color: #4a90e2; color: white; padding: 12px; border: 1px solid #ddd;">profit_formatted</th>
+      <th style="background-color: #4a90e2; color: white; padding: 12px; border: 1px solid #ddd;">growth_formatted</th>
+      <th style="background-color: #4a90e2; color: white; padding: 12px; border: 1px solid #ddd;">market_share</th>
+      <th style="background-color: #4a90e2; color: white; padding: 12px; border: 1px solid #ddd;">revenue_formatted</th>
+      <th style="background-color: #4a90e2; color: white; padding: 12px; border: 1px solid #ddd;">revenue</th>
+      <th style="background-color: #4a90e2; color: white; padding: 12px; border: 1px solid #ddd;">market_share_formatted</th>
+      <th style="background-color: #4a90e2; color: white; padding: 12px; border: 1px solid #ddd;">quarter</th>
+      <th style="background-color: #4a90e2; color: white; padding: 12px; border: 1px solid #ddd;">growth</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="even">
+      <td style="padding: 10px; border: 1px solid #ddd;">420000</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">1250</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">$420K</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">+12%</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">0.152</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">$2.1M</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">2100000</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">15.2%</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Q1 2024</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">0.12</td>
+    </tr>
+    <tr class="odd">
+      <td style="padding: 10px; border: 1px solid #ddd;">480000</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">1380</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">$480K</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">+14%</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">0.161</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">$2.4M</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">2400000</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">16.1%</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Q2 2024</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">0.14</td>
+    </tr>
+    <tr class="even">
+      <td style="padding: 10px; border: 1px solid #ddd;">560000</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">1520</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">$560K</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">+17%</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">0.178</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">$2.8M</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">2800000</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">17.8%</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Q3 2024</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">0.17</td>
+    </tr>
+    <tr class="odd">
+      <td style="padding: 10px; border: 1px solid #ddd;">640000</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">1690</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">$640K</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">+15%</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">0.185</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">$3.2M</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">3200000</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">18.5%</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Q4 2024</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">0.15</td>
+    </tr>
+    <tr class="even">
+      <td style="padding: 10px; border: 1px solid #ddd;">720000</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">1840</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">$720K</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">+13%</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">0.192</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">$3.6M</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">3600000</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">19.2%</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Q1 2025</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">0.13</td>
+    </tr>
+    <tr class="odd">
+      <td style="padding: 10px; border: 1px solid #ddd;">820000</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">2010</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">$820K</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">+14%</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">0.201</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">$4.1M</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">4100000</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">20.1%</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Q2 2025</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">0.14</td>
+    </tr>
+  </tbody>
+</table>
+  </div>
+</details><style>
+.regional_performance-section {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin: 10px 0;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.regional_performance-section summary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 15px 20px;
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 7px 7px 0 0;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.regional_performance-section summary:hover {
+    background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+}
+
+.regional_performance-section summary:focus {
+    outline: 2px solid #4c51bf;
+    outline-offset: 2px;
+}
+
+.regional_performance-section[open] summary {
+    border-radius: 7px 7px 0 0;
+}
+
+.regional_performance-section:not([open]) summary {
+    border-radius: 7px;
+}
+
+.collapsible-title {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+
+
+.collapsible-content {
+    padding: 0;
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        max-height: 0;
+    }
+    to {
+        opacity: 1;
+        max-height: 1000px;
+    }
+}
+
+.regional_performance-section table {
+    margin: 0;
+    border-radius: 0;
+    border: none;
+}
+</style>
+<details class="regional_performance-section" >
+  <summary class="collapsible-header">
+    <div class="section-header-content">
+      <div class="section-title-group">
+        <span class="collapsible-title">📊 Regional Performance</span>
+      </div>
+      <div class="section-title-group">
+        <button class="copy-json-btn" onclick="copyRegionalPerformanceData()">📋 Copy JSON</button>
+        <span class="collapsible-icon">▼</span>
+      </div>
+    </div>
+  </summary>
+  <div class="collapsible-content">
+    <table class="regional_performance-table sortable striped responsive">
+  <thead>
+    <tr>
+      <th style="background-color: #5cb85c; color: white; padding: 12px; border: 1px solid #ddd;">market_penetration_formatted</th>
+      <th style="background-color: #5cb85c; color: white; padding: 12px; border: 1px solid #ddd;">profit</th>
+      <th style="background-color: #5cb85c; color: white; padding: 12px; border: 1px solid #ddd;">profit_formatted</th>
+      <th style="background-color: #5cb85c; color: white; padding: 12px; border: 1px solid #ddd;">growth_formatted</th>
+      <th style="background-color: #5cb85c; color: white; padding: 12px; border: 1px solid #ddd;">region</th>
+      <th style="background-color: #5cb85c; color: white; padding: 12px; border: 1px solid #ddd;">revenue_formatted</th>
+      <th style="background-color: #5cb85c; color: white; padding: 12px; border: 1px solid #ddd;">revenue</th>
+      <th style="background-color: #5cb85c; color: white; padding: 12px; border: 1px solid #ddd;">growth</th>
+      <th style="background-color: #5cb85c; color: white; padding: 12px; border: 1px solid #ddd;">units</th>
+      <th style="background-color: #5cb85c; color: white; padding: 12px; border: 1px solid #ddd;">market_penetration</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="even">
+      <td style="padding: 10px; border: 1px solid #ddd;">24%</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">360000</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">$360K</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">+18%</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">North America</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">$1.8M</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">1800000</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">0.18</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">2450</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">0.24</td>
+    </tr>
+    <tr class="odd">
+      <td style="padding: 10px; border: 1px solid #ddd;">18%</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">240000</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">$240K</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">+15%</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Europe</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">$1.2M</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">1200000</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">0.15</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">1680</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">0.18</td>
+    </tr>
+    <tr class="even">
+      <td style="padding: 10px; border: 1px solid #ddd;">15%</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">180000</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">$180K</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">+22%</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Asia Pacific</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">$900K</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">900000</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">0.22</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">1320</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">0.15</td>
+    </tr>
+    <tr class="odd">
+      <td style="padding: 10px; border: 1px solid #ddd;">5%</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">40000</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">$40K</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">+8%</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Latin America</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">$200K</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">200000</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">0.08</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">280</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">0.05</td>
+    </tr>
+  </tbody>
+</table>
+  </div>
+</details><style>
+.key_metrics-section {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin: 10px 0;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.key_metrics-section summary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 15px 20px;
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 7px 7px 0 0;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.key_metrics-section summary:hover {
+    background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+}
+
+.key_metrics-section summary:focus {
+    outline: 2px solid #4c51bf;
+    outline-offset: 2px;
+}
+
+.key_metrics-section[open] summary {
+    border-radius: 7px 7px 0 0;
+}
+
+.key_metrics-section:not([open]) summary {
+    border-radius: 7px;
+}
+
+.collapsible-title {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+
+
+.collapsible-content {
+    padding: 0;
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        max-height: 0;
+    }
+    to {
+        opacity: 1;
+        max-height: 1000px;
+    }
+}
+
+.key_metrics-section table {
+    margin: 0;
+    border-radius: 0;
+    border: none;
+}
+</style>
+<details class="key_metrics-section" open>
+  <summary class="collapsible-header">
+    <div class="section-header-content">
+      <div class="section-title-group">
+        <span class="collapsible-title">📊 Key Metrics</span>
+      </div>
+      <div class="section-title-group">
+        <button class="copy-json-btn" onclick="copyKeyMetricsData()">📋 Copy JSON</button>
+        <span class="collapsible-icon">▼</span>
+      </div>
+    </div>
+  </summary>
+  <div class="collapsible-content">
+    <table class="key_metrics-table sortable striped responsive">
+  <thead>
+    <tr>
+      <th style="background-color: #8e44ad; color: white; padding: 12px; border: 1px solid #ddd;">Description</th>
+      <th style="background-color: #8e44ad; color: white; padding: 12px; border: 1px solid #ddd;">Value</th>
+      <th style="background-color: #8e44ad; color: white; padding: 12px; border: 1px solid #ddd;">Trend</th>
+      <th style="background-color: #8e44ad; color: white; padding: 12px; border: 1px solid #ddd;">Metric</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="even">
+      <td style="padding: 10px; border: 1px solid #ddd;">Total quarterly revenue</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">$4.1M</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Up</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Total Revenue</td>
+    </tr>
+    <tr class="odd">
+      <td style="padding: 10px; border: 1px solid #ddd;">Net profit after expenses</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">$820K</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Up</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Net Profit</td>
+    </tr>
+    <tr class="even">
+      <td style="padding: 10px; border: 1px solid #ddd;">Profit margin percentage</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">20.0%</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Stable</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Profit Margin</td>
+    </tr>
+    <tr class="odd">
+      <td style="padding: 10px; border: 1px solid #ddd;">Customer retention rate</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">94.5%</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Up</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Customer Retention</td>
+    </tr>
+    <tr class="even">
+      <td style="padding: 10px; border: 1px solid #ddd;">Market share percentage</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">20.1%</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Up</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Market Share</td>
+    </tr>
+    <tr class="odd">
+      <td style="padding: 10px; border: 1px solid #ddd;">Total employee count</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">285</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Up</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Employee Count</td>
+    </tr>
+    <tr class="even">
+      <td style="padding: 10px; border: 1px solid #ddd;">Average customer satisfaction score</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">4.7/5</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Stable</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Customer Satisfaction</td>
+    </tr>
+    <tr class="odd">
+      <td style="padding: 10px; border: 1px solid #ddd;">Year-over-year revenue growth</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">+14%</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Up</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Revenue Growth</td>
+    </tr>
+  </tbody>
+</table>
+  </div>
+</details><style>
+.employee_data-section {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin: 10px 0;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.employee_data-section summary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 15px 20px;
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 7px 7px 0 0;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.employee_data-section summary:hover {
+    background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+}
+
+.employee_data-section summary:focus {
+    outline: 2px solid #4c51bf;
+    outline-offset: 2px;
+}
+
+.employee_data-section[open] summary {
+    border-radius: 7px 7px 0 0;
+}
+
+.employee_data-section:not([open]) summary {
+    border-radius: 7px;
+}
+
+.collapsible-title {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+
+
+.collapsible-content {
+    padding: 0;
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        max-height: 0;
+    }
+    to {
+        opacity: 1;
+        max-height: 1000px;
+    }
+}
+
+.employee_data-section table {
+    margin: 0;
+    border-radius: 0;
+    border: none;
+}
+</style>
+<details class="employee_data-section" >
+  <summary class="collapsible-header">
+    <div class="section-header-content">
+      <div class="section-title-group">
+        <span class="collapsible-title">📊 Employee Data</span>
+      </div>
+      <div class="section-title-group">
+        <button class="copy-json-btn" onclick="copyEmployeeData()">📋 Copy JSON</button>
+        <span class="collapsible-icon">▼</span>
+      </div>
+    </div>
+  </summary>
+  <div class="collapsible-content">
+    <table class="employee_data-table sortable striped responsive">
+  <thead>
+    <tr>
+      <th style="background-color: #f39c12; color: white; padding: 12px; border: 1px solid #ddd;">name</th>
+      <th style="background-color: #f39c12; color: white; padding: 12px; border: 1px solid #ddd;">department</th>
+      <th style="background-color: #f39c12; color: white; padding: 12px; border: 1px solid #ddd;">salary</th>
+      <th style="background-color: #f39c12; color: white; padding: 12px; border: 1px solid #ddd;">location</th>
+      <th style="background-color: #f39c12; color: white; padding: 12px; border: 1px solid #ddd;">salary_formatted</th>
+      <th style="background-color: #f39c12; color: white; padding: 12px; border: 1px solid #ddd;">level</th>
+      <th style="background-color: #f39c12; color: white; padding: 12px; border: 1px solid #ddd;">id</th>
+      <th style="background-color: #f39c12; color: white; padding: 12px; border: 1px solid #ddd;">hire_date</th>
+      <th style="background-color: #f39c12; color: white; padding: 12px; border: 1px solid #ddd;">performance</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="even">
+      <td style="padding: 10px; border: 1px solid #ddd;">Sarah Johnson</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Engineering</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">125000</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">New York</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">$125,000</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Senior</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">EMP001</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">2020-03-15</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Excellent</td>
+    </tr>
+    <tr class="odd">
+      <td style="padding: 10px; border: 1px solid #ddd;">Mike Chen</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Product</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">135000</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">San Francisco</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">$135,000</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Manager</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">EMP002</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">2019-07-22</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Outstanding</td>
+    </tr>
+    <tr class="even">
+      <td style="padding: 10px; border: 1px solid #ddd;">Lisa Rodriguez</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Design</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">115000</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Austin</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">$115,000</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Lead</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">EMP003</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">2021-01-10</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Excellent</td>
+    </tr>
+    <tr class="odd">
+      <td style="padding: 10px; border: 1px solid #ddd;">David Kim</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Engineering</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">145000</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Seattle</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">$145,000</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Principal</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">EMP004</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">2018-09-05</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Outstanding</td>
+    </tr>
+    <tr class="even">
+      <td style="padding: 10px; border: 1px solid #ddd;">Anna Petrov</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Marketing</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">98000</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Chicago</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">$98,000</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Senior</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">EMP005</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">2022-04-18</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Good</td>
+    </tr>
+    <tr class="odd">
+      <td style="padding: 10px; border: 1px solid #ddd;">James Wilson</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Sales</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">160000</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Boston</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">$160,000</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Director</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">EMP006</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">2017-11-30</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Outstanding</td>
+    </tr>
+  </tbody>
+</table>
+  </div>
+</details>
+            </div>
+            
+            <div class="dashboard-footer">
+                <div>✨ Powered by HTML Table Generator - Interactive Data Visualization</div>
+                <div class="footer-info">
+                    <span>📊 5 Data Sources</span>
+                    <span>🔄 Real-time Sorting</span>
+                    <span>📱 Mobile Responsive</span>
+                    <span>💾 JSON Data Driven</span>
+                </div>
+            </div>
+        </div>
+        
+<script>
+// JSON Data for copy functionality
+const dashboardData = {
+    product_performance: [
+        {
+            "product": "Enterprise Software",
+            "revenue": 1500000,
+            "revenue_formatted": "$1.5M",
+            "units": 850,
+            "margin": 0.42,
+            "margin_formatted": "42%",
+            "rating": 4.8,
+            "rating_formatted": "4.8/5",
+            "category": "Software",
+            "target_market": "Enterprise"
+        },
+        {
+            "product": "Cloud Services",
+            "revenue": 1200000,
+            "revenue_formatted": "$1.2M",
+            "units": 1200,
+            "margin": 0.38,
+            "margin_formatted": "38%",
+            "rating": 4.7,
+            "rating_formatted": "4.7/5",
+            "category": "Services",
+            "target_market": "SMB"
+        },
+        {
+            "product": "Mobile Apps",
+            "revenue": 800000,
+            "revenue_formatted": "$800K",
+            "units": 2100,
+            "margin": 0.35,
+            "margin_formatted": "35%",
+            "rating": 4.6,
+            "rating_formatted": "4.6/5",
+            "category": "Software",
+            "target_market": "Consumer"
+        },
+        {
+            "product": "Consulting",
+            "revenue": 600000,
+            "revenue_formatted": "$600K",
+            "units": 120,
+            "margin": 0.45,
+            "margin_formatted": "45%",
+            "rating": 4.9,
+            "rating_formatted": "4.9/5",
+            "category": "Services",
+            "target_market": "Enterprise"
+        }
+    ],
+    quarterly_performance: [
+        {
+            "quarter": "Q1 2024",
+            "revenue": 2100000,
+            "revenue_formatted": "$2.1M",
+            "profit": 420000,
+            "profit_formatted": "$420K",
+            "growth": 0.12,
+            "growth_formatted": "+12%",
+            "customers": 1250,
+            "market_share": 0.152,
+            "market_share_formatted": "15.2%"
+        },
+        {
+            "quarter": "Q2 2024",
+            "revenue": 2400000,
+            "revenue_formatted": "$2.4M",
+            "profit": 480000,
+            "profit_formatted": "$480K",
+            "growth": 0.14,
+            "growth_formatted": "+14%",
+            "customers": 1380,
+            "market_share": 0.161,
+            "market_share_formatted": "16.1%"
+        },
+        {
+            "quarter": "Q3 2024",
+            "revenue": 2800000,
+            "revenue_formatted": "$2.8M",
+            "profit": 560000,
+            "profit_formatted": "$560K",
+            "growth": 0.17,
+            "growth_formatted": "+17%",
+            "customers": 1520,
+            "market_share": 0.178,
+            "market_share_formatted": "17.8%"
+        },
+        {
+            "quarter": "Q4 2024",
+            "revenue": 3200000,
+            "revenue_formatted": "$3.2M",
+            "profit": 640000,
+            "profit_formatted": "$640K",
+            "growth": 0.15,
+            "growth_formatted": "+15%",
+            "customers": 1690,
+            "market_share": 0.185,
+            "market_share_formatted": "18.5%"
+        },
+        {
+            "quarter": "Q1 2025",
+            "revenue": 3600000,
+            "revenue_formatted": "$3.6M",
+            "profit": 720000,
+            "profit_formatted": "$720K",
+            "growth": 0.13,
+            "growth_formatted": "+13%",
+            "customers": 1850,
+            "market_share": 0.192,
+            "market_share_formatted": "19.2%"
+        },
+        {
+            "quarter": "Q2 2025",
+            "revenue": 4100000,
+            "revenue_formatted": "$4.1M",
+            "profit": 820000,
+            "profit_formatted": "$820K",
+            "growth": 0.14,
+            "growth_formatted": "+14%",
+            "customers": 2020,
+            "market_share": 0.201,
+            "market_share_formatted": "20.1%"
+        }
+    ],
+    regional_performance: [
+        {
+            "region": "North America",
+            "revenue": 1800000,
+            "revenue_formatted": "$1.8M",
+            "units": 2450,
+            "growth": 0.18,
+            "growth_formatted": "+18%",
+            "profit": 360000,
+            "profit_formatted": "$360K",
+            "market_penetration": 0.24,
+            "market_penetration_formatted": "24%"
+        },
+        {
+            "region": "Europe",
+            "revenue": 1200000,
+            "revenue_formatted": "$1.2M",
+            "units": 1680,
+            "growth": 0.15,
+            "growth_formatted": "+15%",
+            "profit": 240000,
+            "profit_formatted": "$240K",
+            "market_penetration": 0.18,
+            "market_penetration_formatted": "18%"
+        },
+        {
+            "region": "Asia Pacific",
+            "revenue": 900000,
+            "revenue_formatted": "$900K",
+            "units": 1320,
+            "growth": 0.22,
+            "growth_formatted": "+22%",
+            "profit": 180000,
+            "profit_formatted": "$180K",
+            "market_penetration": 0.15,
+            "market_penetration_formatted": "15%"
+        },
+        {
+            "region": "Latin America",
+            "revenue": 200000,
+            "revenue_formatted": "$200K",
+            "units": 280,
+            "growth": 0.08,
+            "growth_formatted": "+8%",
+            "profit": 40000,
+            "profit_formatted": "$40K",
+            "market_penetration": 0.05,
+            "market_penetration_formatted": "5%"
+        }
+    ],
+    key_metrics: {
+        "total_revenue": {
+            "value": 4100000,
+            "formatted": "$4.1M",
+            "description": "Total quarterly revenue",
+            "trend": "up",
+            "change": 0.14
+        },
+        "net_profit": {
+            "value": 820000,
+            "formatted": "$820K",
+            "description": "Net profit after expenses",
+            "trend": "up",
+            "change": 0.12
+        },
+        "profit_margin": {
+            "value": 0.20,
+            "formatted": "20.0%",
+            "description": "Profit margin percentage",
+            "trend": "stable",
+            "change": 0.01
+        },
+        "customer_retention": {
+            "value": 0.945,
+            "formatted": "94.5%",
+            "description": "Customer retention rate",
+            "trend": "up",
+            "change": 0.02
+        },
+        "market_share": {
+            "value": 0.201,
+            "formatted": "20.1%",
+            "description": "Market share percentage",
+            "trend": "up",
+            "change": 0.009
+        },
+        "employee_count": {
+            "value": 285,
+            "formatted": "285",
+            "description": "Total employee count",
+            "trend": "up",
+            "change": 0.05
+        },
+        "customer_satisfaction": {
+            "value": 4.7,
+            "formatted": "4.7/5",
+            "description": "Average customer satisfaction score",
+            "trend": "stable",
+            "change": 0.1
+        },
+        "monthly_active_users": {
+            "value": 125000,
+            "formatted": "125K",
+            "description": "Monthly active users",
+            "trend": "up",
+            "change": 0.08
+        }
+    },
+    employee_data: [
+        {
+            "id": "EMP001",
+            "name": "Sarah Johnson",
+            "department": "Engineering",
+            "level": "Senior",
+            "salary": 125000,
+            "salary_formatted": "$125,000",
+            "performance": "Excellent",
+            "hire_date": "2020-03-15",
+            "location": "New York"
+        },
+        {
+            "id": "EMP002",
+            "name": "Mike Chen",
+            "department": "Product",
+            "level": "Manager",
+            "salary": 135000,
+            "salary_formatted": "$135,000",
+            "performance": "Outstanding",
+            "hire_date": "2019-07-22",
+            "location": "San Francisco"
+        },
+        {
+            "id": "EMP003",
+            "name": "Lisa Rodriguez",
+            "department": "Design",
+            "level": "Lead",
+            "salary": 115000,
+            "salary_formatted": "$115,000",
+            "performance": "Excellent",
+            "hire_date": "2021-01-10",
+            "location": "Austin"
+        },
+        {
+            "id": "EMP004",
+            "name": "David Kim",
+            "department": "Engineering",
+            "level": "Principal",
+            "salary": 145000,
+            "salary_formatted": "$145,000",
+            "performance": "Outstanding",
+            "hire_date": "2018-09-05",
+            "location": "Seattle"
+        },
+        {
+            "id": "EMP005",
+            "name": "Anna Petrov",
+            "department": "Marketing",
+            "level": "Senior",
+            "salary": 110000,
+            "salary_formatted": "$110,000",
+            "performance": "Good",
+            "hire_date": "2021-11-20",
+            "location": "Chicago"
+        },
+        {
+            "id": "EMP006",
+            "name": "James Wilson",
+            "department": "Sales",
+            "level": "Director",
+            "salary": 155000,
+            "salary_formatted": "$155,000",
+            "performance": "Outstanding",
+            "hire_date": "2017-04-12",
+            "location": "Boston"
+        }
+    ]
+};
+
+// Copy to clipboard functions
+function copyToClipboard(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+        return navigator.clipboard.writeText(text);
+    } else {
+        return fallbackCopyTextToClipboard(text);
+    }
+}
+
+function fallbackCopyTextToClipboard(text) {
+    return new Promise((resolve, reject) => {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        textArea.style.position = "fixed";
+        textArea.style.left = "-999999px";
+        textArea.style.top = "-999999px";
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        
+        try {
+            const successful = document.execCommand('copy');
+            document.body.removeChild(textArea);
+            if (successful) {
+                resolve();
+            } else {
+                reject(new Error("Fallback copy failed"));
+            }
+        } catch (err) {
+            document.body.removeChild(textArea);
+            reject(err);
+        }
+    });
+}
+
+function showCopyNotification(message = "JSON data copied to clipboard!") {
+    // Remove existing notification if any
+    const existingNotification = document.querySelector('.copy-notification');
+    if (existingNotification) {
+        existingNotification.remove();
+    }
+    
+    // Create new notification
+    const notification = document.createElement('div');
+    notification.className = 'copy-notification';
+    notification.textContent = message;
+    document.body.appendChild(notification);
+    
+    // Show notification
+    setTimeout(() => notification.classList.add('show'), 100);
+    
+    // Hide and remove notification
+    setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => notification.remove(), 300);
+    }, 2500);
+}
+
+// Individual copy functions for each section
+function copyProductPerformanceData() {
+    const jsonData = JSON.stringify({ product_performance: dashboardData.product_performance }, null, 2);
+    copyToClipboard(jsonData)
+        .then(() => showCopyNotification("Product Performance data copied to clipboard!"))
+        .catch(() => showCopyNotification("Failed to copy data"));
+}
+
+function copyQuarterlyPerformanceData() {
+    const jsonData = JSON.stringify({ quarterly_performance: dashboardData.quarterly_performance }, null, 2);
+    copyToClipboard(jsonData)
+        .then(() => showCopyNotification("Quarterly Performance data copied to clipboard!"))
+        .catch(() => showCopyNotification("Failed to copy data"));
+}
+
+function copyRegionalPerformanceData() {
+    const jsonData = JSON.stringify({ regional_performance: dashboardData.regional_performance }, null, 2);
+    copyToClipboard(jsonData)
+        .then(() => showCopyNotification("Regional Performance data copied to clipboard!"))
+        .catch(() => showCopyNotification("Failed to copy data"));
+}
+
+function copyKeyMetricsData() {
+    const jsonData = JSON.stringify({ key_metrics: dashboardData.key_metrics }, null, 2);
+    copyToClipboard(jsonData)
+        .then(() => showCopyNotification("Key Metrics data copied to clipboard!"))
+        .catch(() => showCopyNotification("Failed to copy data"));
+}
+
+function copyEmployeeData() {
+    const jsonData = JSON.stringify({ employee_data: dashboardData.employee_data }, null, 2);
+    copyToClipboard(jsonData)
+        .then(() => showCopyNotification("Employee data copied to clipboard!"))
+        .catch(() => showCopyNotification("Failed to copy data"));
+}
+
+// Table sorting functionality
+function sortTable(table, column, dataType = 'auto') {
+    const tbody = table.querySelector('tbody');
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+    const isAscending = table.dataset.sortDirection !== 'asc';
+    
+    // Determine data type if auto
+    if (dataType === 'auto') {
+        const sampleValue = rows[0]?.cells[column]?.textContent.trim();
+        if (sampleValue && !isNaN(sampleValue.replace(/[,$%]/g, ''))) {
+            dataType = 'number';
+        } else if (sampleValue && !isNaN(Date.parse(sampleValue))) {
+            dataType = 'date';
+        } else {
+            dataType = 'string';
+        }
+    }
+    
+    // Sort rows
+    rows.sort((a, b) => {
+        const aText = a.cells[column]?.textContent.trim() || '';
+        const bText = b.cells[column]?.textContent.trim() || '';
+        
+        let aVal, bVal;
+        
+        switch (dataType) {
+            case 'number':
+                aVal = parseFloat(aText.replace(/[,$%]/g, '')) || 0;
+                bVal = parseFloat(bText.replace(/[,$%]/g, '')) || 0;
+                break;
+            case 'date':
+                aVal = new Date(aText);
+                bVal = new Date(bText);
+                break;
+            default:
+                aVal = aText.toLowerCase();
+                bVal = bText.toLowerCase();
+        }
+        
+        if (aVal < bVal) return isAscending ? -1 : 1;
+        if (aVal > bVal) return isAscending ? 1 : -1;
+        return 0;
+    });
+    
+    // Update tbody with sorted rows
+    rows.forEach(row => tbody.appendChild(row));
+    
+    // Update sort direction
+    table.dataset.sortDirection = isAscending ? 'asc' : 'desc';
+    
+    // Update header indicators
+    const headers = table.querySelectorAll('th[data-sortable]');
+    headers.forEach((header, index) => {
+        header.classList.remove('sort-asc', 'sort-desc');
+        if (index === column) {
+            header.classList.add(isAscending ? 'sort-asc' : 'sort-desc');
+        }
+    });
+}
+
+function initializeSortableTables() {
+    document.querySelectorAll('table.sortable').forEach(table => {
+        const headers = table.querySelectorAll('th');
+        headers.forEach((header, index) => {
+            header.setAttribute('data-sortable', 'true');
+            header.style.cursor = 'pointer';
+            header.style.userSelect = 'none';
+            header.style.position = 'relative';
+            
+            // Add sort indicator
+            const indicator = document.createElement('span');
+            indicator.className = 'sort-indicator';
+            indicator.innerHTML = ' ↕️';
+            indicator.style.opacity = '0.5';
+            indicator.style.fontSize = '0.8em';
+            indicator.style.marginLeft = '5px';
+            header.appendChild(indicator);
+            
+            header.addEventListener('click', () => {
+                sortTable(table, index);
+            });
+        });
+    });
+}
+
+// Initialize when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeSortableTables);
+} else {
+    initializeSortableTables();
+}
+</script></body>
+</html>

@@ -1,0 +1,70 @@
+{
+  "employee_data": [
+    {
+      "id": "EMP001",
+      "name": "Sarah Johnson",
+      "department": "Engineering",
+      "level": "Senior",
+      "salary": 125000,
+      "salary_formatted": "$125,000",
+      "performance": "Excellent",
+      "hire_date": "2020-03-15",
+      "location": "New York"
+    },
+    {
+      "id": "EMP002",
+      "name": "Mike Chen",
+      "department": "Product",
+      "level": "Manager",
+      "salary": 135000,
+      "salary_formatted": "$135,000",
+      "performance": "Outstanding",
+      "hire_date": "2019-07-22",
+      "location": "San Francisco"
+    },
+    {
+      "id": "EMP003",
+      "name": "Lisa Rodriguez",
+      "department": "Design",
+      "level": "Lead",
+      "salary": 115000,
+      "salary_formatted": "$115,000",
+      "performance": "Excellent",
+      "hire_date": "2021-01-10",
+      "location": "Austin"
+    },
+    {
+      "id": "EMP004",
+      "name": "David Kim",
+      "department": "Engineering",
+      "level": "Principal",
+      "salary": 145000,
+      "salary_formatted": "$145,000",
+      "performance": "Outstanding",
+      "hire_date": "2018-09-05",
+      "location": "Seattle"
+    },
+    {
+      "id": "EMP005",
+      "name": "Anna Petrov",
+      "department": "Marketing",
+      "level": "Senior",
+      "salary": 98000,
+      "salary_formatted": "$98,000",
+      "performance": "Good",
+      "hire_date": "2022-04-18",
+      "location": "Chicago"
+    },
+    {
+      "id": "EMP006",
+      "name": "James Wilson",
+      "department": "Sales",
+      "level": "Director",
+      "salary": 160000,
+      "salary_formatted": "$160,000",
+      "performance": "Outstanding",
+      "hire_date": "2017-11-30",
+      "location": "Boston"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+# HTML Table Generator Dependencies
+# No external dependencies required for core functionality
+# The generator uses only Python standard library
+
+# Optional dependencies for development and testing
+pytest>=7.0.0
+pytest-cov>=4.0.0
+
+# Optional web framework for serving generated tables
+Flask>=2.2.0
+
+# Optional dependencies for enhanced features
+# beautifulsoup4>=4.11.0  # For HTML parsing/validation if needed
+# jinja2>=3.1.0  # For template-based generation if needed

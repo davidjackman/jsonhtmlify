@@ -1,0 +1,52 @@
+{
+  "product_performance": [
+    {
+      "product": "Enterprise Software",
+      "revenue": 1500000,
+      "revenue_formatted": "$1.5M",
+      "units": 850,
+      "margin": 0.42,
+      "margin_formatted": "42%",
+      "rating": 4.8,
+      "rating_formatted": "4.8/5",
+      "category": "Software",
+      "target_market": "Enterprise"
+    },
+    {
+      "product": "Cloud Services",
+      "revenue": 1200000,
+      "revenue_formatted": "$1.2M",
+      "units": 1200,
+      "margin": 0.38,
+      "margin_formatted": "38%",
+      "rating": 4.7,
+      "rating_formatted": "4.7/5",
+      "category": "Services",
+      "target_market": "SMB"
+    },
+    {
+      "product": "Mobile Apps",
+      "revenue": 800000,
+      "revenue_formatted": "$800K",
+      "units": 2100,
+      "margin": 0.35,
+      "margin_formatted": "35%",
+      "rating": 4.6,
+      "rating_formatted": "4.6/5",
+      "category": "Software",
+      "target_market": "Consumer"
+    },
+    {
+      "product": "Consulting",
+      "revenue": 600000,
+      "revenue_formatted": "$600K",
+      "units": 120,
+      "margin": 0.45,
+      "margin_formatted": "45%",
+      "rating": 4.9,
+      "rating_formatted": "4.9/5",
+      "category": "Services",
+      "target_market": "Enterprise"
+    }
+  ]
+}

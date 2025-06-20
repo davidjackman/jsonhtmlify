@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Sortable Tables Demo - Interactive Column Sorting</title>
+<style>
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 20px;
+        padding: 20px;
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        min-height: 100vh;
+    }
+    
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 12px;
+        padding: 30px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    
+    h1 {
+        color: #2c3e50;
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 2.5em;
+        font-weight: 300;
+    }
+    
+    .instructions {
+        background: #e8f4f8;
+        border-left: 4px solid #2196F3;
+        padding: 20px;
+        margin-bottom: 30px;
+        border-radius: 0 8px 8px 0;
+    }
+    
+    .instructions h2 {
+        color: #1976D2;
+        margin-top: 0;
+        font-size: 1.3em;
+    }
+    
+    .instructions ul {
+        margin: 10px 0;
+        padding-left: 20px;
+    }
+    
+    .instructions li {
+        margin: 8px 0;
+        color: #34495e;
+    }
+    
+    .demo-info {
+        background: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        padding: 15px;
+        margin-top: 30px;
+    }
+    
+    .demo-info h3 {
+        color: #495057;
+        margin-top: 0;
+        font-size: 1.1em;
+    }
+    
+    .demo-info p {
+        color: #6c757d;
+        margin: 5px 0;
+    }
+    
+    /* Enhanced sortable styling */
+    .employee-table.sortable th[data-sortable] {
+        position: relative;
+        cursor: pointer;
+        user-select: none;
+        transition: all 0.2s ease;
+    }
+    
+    .employee-table.sortable th[data-sortable]:hover {
+        background: linear-gradient(135deg, #1976D2, #1565C0) !important;
+        transform: translateY(-1px);
+    }
+    
+</style>
+<style>
+/* Sortable table styles */
+.sortable th[data-sortable] {
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.2s ease;
+}
+
+.sortable th[data-sortable]:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.sortable th.sort-asc .sort-indicator::after {
+    content: ' ↑';
+    color: #fff;
+    font-weight: bold;
+    opacity: 1;
+}
+
+.sortable th.sort-desc .sort-indicator::after {
+    content: ' ↓';
+    color: #fff;
+    font-weight: bold;
+    opacity: 1;
+}
+
+.sortable th:not(.sort-asc):not(.sort-desc) .sort-indicator {
+    opacity: 0.5;
+}
+
+.sortable th.sort-asc,
+.sortable th.sort-desc {
+    filter: brightness(1.05);
+}
+</style></head>
+<body>
+
+    <div class="container">
+        <h1>🔄 Interactive Sortable Tables Demo</h1>
+        
+        <div class="instructions">
+            <h2>📋 How to Use Sortable Tables</h2>
+            <ul>
+                <li><strong>Click any column header</strong> to sort the table by that column</li>
+                <li><strong>Click again</strong> to reverse the sort order (ascending ↔ descending)</li>
+                <li><strong>Look for the arrows</strong>: ↕️ (sortable), ↑ (ascending), ↓ (descending)</li>
+                <li><strong>Different data types</strong> are handled automatically:
+                    <ul>
+                        <li>🔢 Numbers (Salary): Sorted numerically</li>
+                        <li>📅 Dates (Start Date): Sorted chronologically</li>
+                        <li>📝 Text (Name, Department): Sorted alphabetically</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        
+        <table class="employee-table sortable striped responsive" style="width: 100%; font-family: "Segoe UI", sans-serif; margin-bottom: 20px;">
+  <thead>
+    <tr>
+      <th style="background: linear-gradient(135deg, #2196F3, #1976D2); color: white; padding: 15px; text-align: left; font-weight: 600;">Full Name</th>
+      <th style="background: linear-gradient(135deg, #2196F3, #1976D2); color: white; padding: 15px; text-align: left; font-weight: 600;">Employee ID</th>
+      <th style="background: linear-gradient(135deg, #2196F3, #1976D2); color: white; padding: 15px; text-align: left; font-weight: 600;">Department</th>
+      <th style="background: linear-gradient(135deg, #2196F3, #1976D2); color: white; padding: 15px; text-align: left; font-weight: 600;">Annual Salary ($)</th>
+      <th style="background: linear-gradient(135deg, #2196F3, #1976D2); color: white; padding: 15px; text-align: left; font-weight: 600;">Rating</th>
+      <th style="background: linear-gradient(135deg, #2196F3, #1976D2); color: white; padding: 15px; text-align: left; font-weight: 600;">Start Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="even">
+      <td style="padding: 12px 15px; border-bottom: 1px solid #e3f2fd;">Sarah Johnson</td>
+      <td style="padding: 12px 15px; border-bottom: 1px solid #e3f2fd;">EMP001</td>
+      <td style="padding: 12px 15px; border-bottom: 1px solid #e3f2fd;">Engineering</td>
+      <td style="padding: 12px 15px; border-bottom: 1px solid #e3f2fd;">125000</td>
+      <td style="padding: 12px 15px; border-bottom: 1px solid #e3f2fd;">Excellent</td>
+      <td style="padding: 12px 15px; border-bottom: 1px solid #e3f2fd;">2020-03-15</td>
+    </tr>
+    <tr class="odd">
+      <td style="padding: 12px 15px; border-bottom: 1px solid #e3f2fd;">Mike Chen</td>
+      <td style="padding: 12px 15px; border-bottom: 1px solid #e3f2fd;">EMP002</td>
+      <td style="padding: 12px 15px; border-bottom: 1px solid #e3f2fd;">Product</td>
+      <td style="padding: 12px 15px; border-bottom: 1px solid #e3f2fd;">135000</td>
+      <td style="padding: 12px 15px; border-bottom: 1px solid #e3f2fd;">Outstanding</td>
+      <td style="padding: 12px 15px; border-bottom: 1px solid #e3f2fd;">2019-07-22</td>
+    </tr>
+    <tr class="even">
+      <td style="padding: 12px 15px; border-bottom: 1px solid #e3f2fd;">Lisa Rodriguez</td>
+      <td style="padding: 12px 15px; border-bottom: 1px solid #e3f2fd;">EMP003</td>
+      <td style="padding: 12px 15px; border-bottom: 1px solid #e3f2fd;">Design</td>
+      <td style="padding: 12px 15px; border-bottom: 1px solid #e3f2fd;">115000</td>
+      <td style="padding: 12px 15px; border-bottom: 1px solid #e3f2fd;">Excellent</td>
+      <td style="padding: 12px 15px; border-bottom: 1px solid #e3f2fd;">2021-01-10</td>
+    </tr>
+    <tr class="odd">
+      <td style="padding: 12px 15px; border-bottom: 1px solid #e3f2fd;">David Kim</td>
+      <td style="padding: 12px 15px; border-bottom: 1px solid #e3f2fd;">EMP004</td>
+      <td style="padding: 12px 15px; border-bottom: 1px solid #e3f2fd;">Engineering</td>
+      <td style="padding: 12px 15px; border-bottom: 1px solid #e3f2fd;">145000</td>
+      <td style="padding: 12px 15px; border-bottom: 1px solid #e3f2fd;">Outstanding</td>
+      <td style="padding: 12px 15px; border-bottom: 1px solid #e3f2fd;">2018-09-05</td>
+    </tr>
+    <tr class="even">
+      <td style="padding: 12px 15px; border-bottom: 1px solid #e3f2fd;">Anna Petrov</td>
+      <td style="padding: 12px 15px; border-bottom: 1px solid #e3f2fd;">EMP005</td>
+      <td style="padding: 12px 15px; border-bottom: 1px solid #e3f2fd;">Marketing</td>
+      <td style="padding: 12px 15px; border-bottom: 1px solid #e3f2fd;">98000</td>
+      <td style="padding: 12px 15px; border-bottom: 1px solid #e3f2fd;">Good</td>
+      <td style="padding: 12px 15px; border-bottom: 1px solid #e3f2fd;">2022-04-18</td>
+    </tr>
+    <tr class="odd">
+      <td style="padding: 12px 15px; border-bottom: 1px solid #e3f2fd;">James Wilson</td>
+      <td style="padding: 12px 15px; border-bottom: 1px solid #e3f2fd;">EMP006</td>
+      <td style="padding: 12px 15px; border-bottom: 1px solid #e3f2fd;">Sales</td>
+      <td style="padding: 12px 15px; border-bottom: 1px solid #e3f2fd;">110000</td>
+      <td style="padding: 12px 15px; border-bottom: 1px solid #e3f2fd;">Excellent</td>
+      <td style="padding: 12px 15px; border-bottom: 1px solid #e3f2fd;">2021-11-30</td>
+    </tr>
+    <tr class="even">
+      <td style="padding: 12px 15px; border-bottom: 1px solid #e3f2fd;">Maria Garcia</td>
+      <td style="padding: 12px 15px; border-bottom: 1px solid #e3f2fd;">EMP007</td>
+      <td style="padding: 12px 15px; border-bottom: 1px solid #e3f2fd;">HR</td>
+      <td style="padding: 12px 15px; border-bottom: 1px solid #e3f2fd;">95000</td>
+      <td style="padding: 12px 15px; border-bottom: 1px solid #e3f2fd;">Good</td>
+      <td style="padding: 12px 15px; border-bottom: 1px solid #e3f2fd;">2020-08-12</td>
+    </tr>
+    <tr class="odd">
+      <td style="padding: 12px 15px; border-bottom: 1px solid #e3f2fd;">Robert Taylor</td>
+      <td style="padding: 12px 15px; border-bottom: 1px solid #e3f2fd;">EMP008</td>
+      <td style="padding: 12px 15px; border-bottom: 1px solid #e3f2fd;">Finance</td>
+      <td style="padding: 12px 15px; border-bottom: 1px solid #e3f2fd;">120000</td>
+      <td style="padding: 12px 15px; border-bottom: 1px solid #e3f2fd;">Outstanding</td>
+      <td style="padding: 12px 15px; border-bottom: 1px solid #e3f2fd;">2019-12-03</td>
+    </tr>
+  </tbody>
+</table>
+        
+        <div class="demo-info">
+            <h3>🎯 Data Types in This Demo</h3>
+            <p><strong>Text Columns:</strong> Employee ID, Full Name, Department, Rating</p>
+            <p><strong>Number Column:</strong> Annual Salary (automatically handles $ and commas)</p>
+            <p><strong>Date Column:</strong> Start Date (automatically recognizes date format)</p>
+            <p><strong>Try clicking different headers to see how each data type sorts!</strong></p>
+        </div>
+    </div>
+    
+<script>
+function sortTable(table, column, dataType = 'auto') {
+    const tbody = table.querySelector('tbody');
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+    const isAscending = table.dataset.sortDirection !== 'asc';
+    
+    // Determine data type if auto
+    if (dataType === 'auto') {
+        const sampleValue = rows[0]?.cells[column]?.textContent.trim();
+        if (sampleValue && !isNaN(sampleValue.replace(/[,$%]/g, ''))) {
+            dataType = 'number';
+        } else if (sampleValue && !isNaN(Date.parse(sampleValue))) {
+            dataType = 'date';
+        } else {
+            dataType = 'string';
+        }
+    }
+    
+    // Sort rows
+    rows.sort((a, b) => {
+        const aText = a.cells[column]?.textContent.trim() || '';
+        const bText = b.cells[column]?.textContent.trim() || '';
+        
+        let aVal, bVal;
+        
+        switch (dataType) {
+            case 'number':
+                aVal = parseFloat(aText.replace(/[,$%]/g, '')) || 0;
+                bVal = parseFloat(bText.replace(/[,$%]/g, '')) || 0;
+                break;
+            case 'date':
+                aVal = new Date(aText);
+                bVal = new Date(bText);
+                break;
+            default:
+                aVal = aText.toLowerCase();
+                bVal = bText.toLowerCase();
+        }
+        
+        if (aVal < bVal) return isAscending ? -1 : 1;
+        if (aVal > bVal) return isAscending ? 1 : -1;
+        return 0;
+    });
+    
+    // Update tbody with sorted rows
+    rows.forEach(row => tbody.appendChild(row));
+    
+    // Update sort direction
+    table.dataset.sortDirection = isAscending ? 'asc' : 'desc';
+    
+    // Update header indicators
+    const headers = table.querySelectorAll('th[data-sortable]');
+    headers.forEach((header, index) => {
+        header.classList.remove('sort-asc', 'sort-desc');
+        if (index === column) {
+            header.classList.add(isAscending ? 'sort-asc' : 'sort-desc');
+        }
+    });
+}
+
+function initializeSortableTables() {
+    document.querySelectorAll('table.sortable').forEach(table => {
+        const headers = table.querySelectorAll('th');
+        headers.forEach((header, index) => {
+            header.setAttribute('data-sortable', 'true');
+            header.style.cursor = 'pointer';
+            header.style.userSelect = 'none';
+            header.style.position = 'relative';
+            
+            // Add sort indicator
+            const indicator = document.createElement('span');
+            indicator.className = 'sort-indicator';
+            indicator.innerHTML = ' ↕️';
+            indicator.style.opacity = '0.5';
+            indicator.style.fontSize = '0.8em';
+            indicator.style.marginLeft = '5px';
+            header.appendChild(indicator);
+            
+            header.addEventListener('click', () => {
+                sortTable(table, index);
+            });
+        });
+    });
+}
+
+// Initialize when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeSortableTables);
+} else {
+    initializeSortableTables();
+}
+</script></body>
+</html>

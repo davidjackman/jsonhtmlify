@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Sales Dashboard - Collapsible Reports</title>
+<style>
+body { font-family: Arial, sans-serif; margin: 20px; background-color: #f8f9fa; }
+</style>
+</head>
+<body>
+<style>
+.sales-report-q1 {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin: 10px 0;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.sales-report-q1 summary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 15px 20px;
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 7px 7px 0 0;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.sales-report-q1 summary:hover {
+    background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+}
+
+.sales-report-q1 summary:focus {
+    outline: 2px solid #4c51bf;
+    outline-offset: 2px;
+}
+
+.sales-report-q1[open] summary {
+    border-radius: 7px 7px 0 0;
+}
+
+.sales-report-q1:not([open]) summary {
+    border-radius: 7px;
+}
+
+.collapsible-title {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.collapsible-icon {
+    font-size: 12px;
+    transition: transform 0.3s ease;
+}
+
+.sales-report-q1[open] .collapsible-icon {
+    transform: rotate(180deg);
+}
+
+.collapsible-content {
+    padding: 0;
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        max-height: 0;
+    }
+    to {
+        opacity: 1;
+        max-height: 1000px;
+    }
+}
+
+.sales-report-q1 table {
+    margin: 0;
+    border-radius: 0;
+    border: none;
+}
+</style>
+<details class="sales-report-q1" open>
+  <summary class="collapsible-header">
+    <span class="collapsible-title">Q1 2025 Sales Report</span>
+    <span class="collapsible-icon">▼</span>
+  </summary>
+  <div class="collapsible-content">
+    <table class="sales-table striped">
+  <thead>
+    <tr>
+      <th>Q1 Units</th>
+      <th>Revenue</th>
+      <th>Product</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="even">
+      <td>150</td>
+      <td>225000</td>
+      <td>Laptop</td>
+    </tr>
+    <tr class="odd">
+      <td>300</td>
+      <td>15000</td>
+      <td>Mouse</td>
+    </tr>
+    <tr class="even">
+      <td>200</td>
+      <td>30000</td>
+      <td>Keyboard</td>
+    </tr>
+  </tbody>
+</table>
+  </div>
+</details>
+
+<style>
+.sales-report-q2 {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin: 10px 0;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.sales-report-q2 summary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 15px 20px;
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 7px 7px 0 0;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.sales-report-q2 summary:hover {
+    background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+}
+
+.sales-report-q2 summary:focus {
+    outline: 2px solid #4c51bf;
+    outline-offset: 2px;
+}
+
+.sales-report-q2[open] summary {
+    border-radius: 7px 7px 0 0;
+}
+
+.sales-report-q2:not([open]) summary {
+    border-radius: 7px;
+}
+
+.collapsible-title {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.collapsible-icon {
+    font-size: 12px;
+    transition: transform 0.3s ease;
+}
+
+.sales-report-q2[open] .collapsible-icon {
+    transform: rotate(180deg);
+}
+
+.collapsible-content {
+    padding: 0;
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        max-height: 0;
+    }
+    to {
+        opacity: 1;
+        max-height: 1000px;
+    }
+}
+
+.sales-report-q2 table {
+    margin: 0;
+    border-radius: 0;
+    border: none;
+}
+</style>
+<details class="sales-report-q2" >
+  <summary class="collapsible-header">
+    <span class="collapsible-title">Q2 2025 Sales Report</span>
+    <span class="collapsible-icon">▼</span>
+  </summary>
+  <div class="collapsible-content">
+    <table class="sales-table striped">
+  <thead>
+    <tr>
+      <th>Q2 Units</th>
+      <th>Revenue</th>
+      <th>Product</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="even">
+      <td>180</td>
+      <td>270000</td>
+      <td>Laptop</td>
+    </tr>
+    <tr class="odd">
+      <td>350</td>
+      <td>17500</td>
+      <td>Mouse</td>
+    </tr>
+    <tr class="even">
+      <td>250</td>
+      <td>37500</td>
+      <td>Keyboard</td>
+    </tr>
+  </tbody>
+</table>
+  </div>
+</details>
+</body>
+</html>

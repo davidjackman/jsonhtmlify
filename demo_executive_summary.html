@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Interactive Business Dashboard</title>
+<style>
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f2f5;
+            line-height: 1.6;
+        }
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            border-top: 4px solid #4a90e2;
+        }
+        .dashboard-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #4a90e2;
+        }
+        .dashboard-header h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        .dashboard-subtitle {
+            color: #6c757d;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+        .dashboard-timestamp {
+            color: #7f8c8d;
+            font-style: italic;
+        }
+        .dashboard-sections {
+            margin-bottom: 30px;
+        }
+        .dashboard-footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #e9ecef;
+            color: #7f8c8d;
+        }
+        .footer-info {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+        .footer-info span {
+            background: #f8f9fa;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.85em;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .sortable tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+        @media (max-width: 768px) {
+            .dashboard-container {
+                margin: 10px;
+                padding: 20px;
+            }
+            .footer-info {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+        }
+        
+</style>
+<style>
+/* Sortable table styles */
+.sortable th[data-sortable] {
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.2s ease;
+}
+
+.sortable th[data-sortable]:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.sortable th.sort-asc .sort-indicator::after {
+    content: ' ↑';
+    color: #fff;
+    font-weight: bold;
+    opacity: 1;
+}
+
+.sortable th.sort-desc .sort-indicator::after {
+    content: ' ↓';
+    color: #fff;
+    font-weight: bold;
+    opacity: 1;
+}
+
+.sortable th:not(.sort-asc):not(.sort-desc) .sort-indicator {
+    opacity: 0.5;
+}
+
+.sortable th.sort-asc,
+.sortable th.sort-desc {
+    filter: brightness(1.05);
+}
+</style></head>
+<body>
+
+        <div class="dashboard-container">
+            <div class="dashboard-header">
+                <h1>🏢 Interactive Business Dashboard</h1>
+                <p class="dashboard-subtitle">Generated from JSON Data Sources</p>
+                <div class="dashboard-timestamp">📅 Generated: June 19, 2025 at 10:16 PM</div>
+            </div>
+            
+            <div class="dashboard-sections">
+                <style>
+.key_metrics-section {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin: 10px 0;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.key_metrics-section summary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 15px 20px;
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 7px 7px 0 0;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.key_metrics-section summary:hover {
+    background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+}
+
+.key_metrics-section summary:focus {
+    outline: 2px solid #4c51bf;
+    outline-offset: 2px;
+}
+
+.key_metrics-section[open] summary {
+    border-radius: 7px 7px 0 0;
+}
+
+.key_metrics-section:not([open]) summary {
+    border-radius: 7px;
+}
+
+.collapsible-title {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.collapsible-icon {
+    font-size: 12px;
+    transition: transform 0.3s ease;
+}
+
+.key_metrics-section[open] .collapsible-icon {
+    transform: rotate(180deg);
+}
+
+.collapsible-content {
+    padding: 0;
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        max-height: 0;
+    }
+    to {
+        opacity: 1;
+        max-height: 1000px;
+    }
+}
+
+.key_metrics-section table {
+    margin: 0;
+    border-radius: 0;
+    border: none;
+}
+</style>
+<details class="key_metrics-section" open>
+  <summary class="collapsible-header">
+    <span class="collapsible-title">📊 Key Metrics</span>
+    <span class="collapsible-icon">▼</span>
+  </summary>
+  <div class="collapsible-content">
+    <table class="key_metrics-table sortable striped responsive">
+  <thead>
+    <tr>
+      <th style="background-color: #8e44ad; color: white; padding: 12px; border: 1px solid #ddd;">Trend</th>
+      <th style="background-color: #8e44ad; color: white; padding: 12px; border: 1px solid #ddd;">Metric</th>
+      <th style="background-color: #8e44ad; color: white; padding: 12px; border: 1px solid #ddd;">Value</th>
+      <th style="background-color: #8e44ad; color: white; padding: 12px; border: 1px solid #ddd;">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="even">
+      <td style="padding: 10px; border: 1px solid #ddd;">Up</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Total Revenue</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">$4.1M</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Total quarterly revenue</td>
+    </tr>
+    <tr class="odd">
+      <td style="padding: 10px; border: 1px solid #ddd;">Up</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Net Profit</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">$820K</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Net profit after expenses</td>
+    </tr>
+    <tr class="even">
+      <td style="padding: 10px; border: 1px solid #ddd;">Stable</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Profit Margin</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">20.0%</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Profit margin percentage</td>
+    </tr>
+    <tr class="odd">
+      <td style="padding: 10px; border: 1px solid #ddd;">Up</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Customer Retention</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">94.5%</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Customer retention rate</td>
+    </tr>
+    <tr class="even">
+      <td style="padding: 10px; border: 1px solid #ddd;">Up</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Market Share</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">20.1%</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Market share percentage</td>
+    </tr>
+    <tr class="odd">
+      <td style="padding: 10px; border: 1px solid #ddd;">Up</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Employee Count</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">285</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Total employee count</td>
+    </tr>
+    <tr class="even">
+      <td style="padding: 10px; border: 1px solid #ddd;">Stable</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Customer Satisfaction</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">4.7/5</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Average customer satisfaction score</td>
+    </tr>
+    <tr class="odd">
+      <td style="padding: 10px; border: 1px solid #ddd;">Up</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Revenue Growth</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">+14%</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Year-over-year revenue growth</td>
+    </tr>
+  </tbody>
+</table>
+  </div>
+</details><style>
+.employee_data-section {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin: 10px 0;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.employee_data-section summary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 15px 20px;
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 7px 7px 0 0;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.employee_data-section summary:hover {
+    background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+}
+
+.employee_data-section summary:focus {
+    outline: 2px solid #4c51bf;
+    outline-offset: 2px;
+}
+
+.employee_data-section[open] summary {
+    border-radius: 7px 7px 0 0;
+}
+
+.employee_data-section:not([open]) summary {
+    border-radius: 7px;
+}
+
+.collapsible-title {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.collapsible-icon {
+    font-size: 12px;
+    transition: transform 0.3s ease;
+}
+
+.employee_data-section[open] .collapsible-icon {
+    transform: rotate(180deg);
+}
+
+.collapsible-content {
+    padding: 0;
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        max-height: 0;
+    }
+    to {
+        opacity: 1;
+        max-height: 1000px;
+    }
+}
+
+.employee_data-section table {
+    margin: 0;
+    border-radius: 0;
+    border: none;
+}
+</style>
+<details class="employee_data-section" >
+  <summary class="collapsible-header">
+    <span class="collapsible-title">📊 Employee Data</span>
+    <span class="collapsible-icon">▼</span>
+  </summary>
+  <div class="collapsible-content">
+    <table class="employee_data-table sortable striped responsive">
+  <thead>
+    <tr>
+      <th style="background-color: #f39c12; color: white; padding: 12px; border: 1px solid #ddd;">department</th>
+      <th style="background-color: #f39c12; color: white; padding: 12px; border: 1px solid #ddd;">location</th>
+      <th style="background-color: #f39c12; color: white; padding: 12px; border: 1px solid #ddd;">name</th>
+      <th style="background-color: #f39c12; color: white; padding: 12px; border: 1px solid #ddd;">salary_formatted</th>
+      <th style="background-color: #f39c12; color: white; padding: 12px; border: 1px solid #ddd;">salary</th>
+      <th style="background-color: #f39c12; color: white; padding: 12px; border: 1px solid #ddd;">level</th>
+      <th style="background-color: #f39c12; color: white; padding: 12px; border: 1px solid #ddd;">performance</th>
+      <th style="background-color: #f39c12; color: white; padding: 12px; border: 1px solid #ddd;">hire_date</th>
+      <th style="background-color: #f39c12; color: white; padding: 12px; border: 1px solid #ddd;">id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="even">
+      <td style="padding: 10px; border: 1px solid #ddd;">Engineering</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">New York</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Sarah Johnson</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">$125,000</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">125000</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Senior</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Excellent</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">2020-03-15</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">EMP001</td>
+    </tr>
+    <tr class="odd">
+      <td style="padding: 10px; border: 1px solid #ddd;">Product</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">San Francisco</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Mike Chen</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">$135,000</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">135000</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Manager</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Outstanding</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">2019-07-22</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">EMP002</td>
+    </tr>
+    <tr class="even">
+      <td style="padding: 10px; border: 1px solid #ddd;">Design</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Austin</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Lisa Rodriguez</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">$115,000</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">115000</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Lead</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Excellent</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">2021-01-10</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">EMP003</td>
+    </tr>
+    <tr class="odd">
+      <td style="padding: 10px; border: 1px solid #ddd;">Engineering</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Seattle</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">David Kim</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">$145,000</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">145000</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Principal</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Outstanding</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">2018-09-05</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">EMP004</td>
+    </tr>
+    <tr class="even">
+      <td style="padding: 10px; border: 1px solid #ddd;">Marketing</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Chicago</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Anna Petrov</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">$98,000</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">98000</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Senior</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Good</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">2022-04-18</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">EMP005</td>
+    </tr>
+    <tr class="odd">
+      <td style="padding: 10px; border: 1px solid #ddd;">Sales</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Boston</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">James Wilson</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">$160,000</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">160000</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Director</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Outstanding</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">2017-11-30</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">EMP006</td>
+    </tr>
+  </tbody>
+</table>
+  </div>
+</details>
+            </div>
+            
+            <div class="dashboard-footer">
+                <div>✨ Powered by HTML Table Generator - Interactive Data Visualization</div>
+                <div class="footer-info">
+                    <span>📊 2 Data Sources</span>
+                    <span>🔄 Real-time Sorting</span>
+                    <span>📱 Mobile Responsive</span>
+                    <span>💾 JSON Data Driven</span>
+                </div>
+            </div>
+        </div>
+        
+<script>
+function sortTable(table, column, dataType = 'auto') {
+    const tbody = table.querySelector('tbody');
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+    const isAscending = table.dataset.sortDirection !== 'asc';
+    
+    // Determine data type if auto
+    if (dataType === 'auto') {
+        const sampleValue = rows[0]?.cells[column]?.textContent.trim();
+        if (sampleValue && !isNaN(sampleValue.replace(/[,$%]/g, ''))) {
+            dataType = 'number';
+        } else if (sampleValue && !isNaN(Date.parse(sampleValue))) {
+            dataType = 'date';
+        } else {
+            dataType = 'string';
+        }
+    }
+    
+    // Sort rows
+    rows.sort((a, b) => {
+        const aText = a.cells[column]?.textContent.trim() || '';
+        const bText = b.cells[column]?.textContent.trim() || '';
+        
+        let aVal, bVal;
+        
+        switch (dataType) {
+            case 'number':
+                aVal = parseFloat(aText.replace(/[,$%]/g, '')) || 0;
+                bVal = parseFloat(bText.replace(/[,$%]/g, '')) || 0;
+                break;
+            case 'date':
+                aVal = new Date(aText);
+                bVal = new Date(bText);
+                break;
+            default:
+                aVal = aText.toLowerCase();
+                bVal = bText.toLowerCase();
+        }
+        
+        if (aVal < bVal) return isAscending ? -1 : 1;
+        if (aVal > bVal) return isAscending ? 1 : -1;
+        return 0;
+    });
+    
+    // Update tbody with sorted rows
+    rows.forEach(row => tbody.appendChild(row));
+    
+    // Update sort direction
+    table.dataset.sortDirection = isAscending ? 'asc' : 'desc';
+    
+    // Update header indicators
+    const headers = table.querySelectorAll('th[data-sortable]');
+    headers.forEach((header, index) => {
+        header.classList.remove('sort-asc', 'sort-desc');
+        if (index === column) {
+            header.classList.add(isAscending ? 'sort-asc' : 'sort-desc');
+        }
+    });
+}
+
+function initializeSortableTables() {
+    document.querySelectorAll('table.sortable').forEach(table => {
+        const headers = table.querySelectorAll('th');
+        headers.forEach((header, index) => {
+            header.setAttribute('data-sortable', 'true');
+            header.style.cursor = 'pointer';
+            header.style.userSelect = 'none';
+            header.style.position = 'relative';
+            
+            // Add sort indicator
+            const indicator = document.createElement('span');
+            indicator.className = 'sort-indicator';
+            indicator.innerHTML = ' ↕️';
+            indicator.style.opacity = '0.5';
+            indicator.style.fontSize = '0.8em';
+            indicator.style.marginLeft = '5px';
+            header.appendChild(indicator);
+            
+            header.addEventListener('click', () => {
+                sortTable(table, index);
+            });
+        });
+    });
+}
+
+// Initialize when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeSortableTables);
+} else {
+    initializeSortableTables();
+}
+</script></body>
+</html>

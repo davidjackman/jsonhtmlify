@@ -1,0 +1,52 @@
+{
+  "regional_performance": [
+    {
+      "region": "North America",
+      "revenue": 1800000,
+      "revenue_formatted": "$1.8M",
+      "units": 2450,
+      "growth": 0.18,
+      "growth_formatted": "+18%",
+      "profit": 360000,
+      "profit_formatted": "$360K",
+      "market_penetration": 0.24,
+      "market_penetration_formatted": "24%"
+    },
+    {
+      "region": "Europe",
+      "revenue": 1200000,
+      "revenue_formatted": "$1.2M",
+      "units": 1680,
+      "growth": 0.15,
+      "growth_formatted": "+15%",
+      "profit": 240000,
+      "profit_formatted": "$240K",
+      "market_penetration": 0.18,
+      "market_penetration_formatted": "18%"
+    },
+    {
+      "region": "Asia Pacific",
+      "revenue": 900000,
+      "revenue_formatted": "$900K",
+      "units": 1320,
+      "growth": 0.22,
+      "growth_formatted": "+22%",
+      "profit": 180000,
+      "profit_formatted": "$180K",
+      "market_penetration": 0.15,
+      "market_penetration_formatted": "15%"
+    },
+    {
+      "region": "Latin America",
+      "revenue": 200000,
+      "revenue_formatted": "$200K",
+      "units": 280,
+      "growth": 0.08,
+      "growth_formatted": "+8%",
+      "profit": 40000,
+      "profit_formatted": "$40K",
+      "market_penetration": 0.05,
+      "market_penetration_formatted": "5%"
+    }
+  ]
+}

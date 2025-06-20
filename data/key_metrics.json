@@ -1,0 +1,60 @@
+{
+  "key_metrics": {
+    "total_revenue": {
+      "value": 4100000,
+      "formatted": "$4.1M",
+      "description": "Total quarterly revenue",
+      "trend": "up",
+      "change": 0.14
+    },
+    "net_profit": {
+      "value": 820000,
+      "formatted": "$820K",
+      "description": "Net profit after expenses",
+      "trend": "up",
+      "change": 0.12
+    },
+    "profit_margin": {
+      "value": 0.20,
+      "formatted": "20.0%",
+      "description": "Profit margin percentage",
+      "trend": "stable",
+      "change": 0.01
+    },
+    "customer_retention": {
+      "value": 0.945,
+      "formatted": "94.5%",
+      "description": "Customer retention rate",
+      "trend": "up",
+      "change": 0.02
+    },
+    "market_share": {
+      "value": 0.201,
+      "formatted": "20.1%",
+      "description": "Market share percentage",
+      "trend": "up",
+      "change": 0.009
+    },
+    "employee_count": {
+      "value": 285,
+      "formatted": "285",
+      "description": "Total employee count",
+      "trend": "up",
+      "change": 0.05
+    },
+    "customer_satisfaction": {
+      "value": 4.7,
+      "formatted": "4.7/5",
+      "description": "Average customer satisfaction score",
+      "trend": "stable",
+      "change": 0.1
+    },
+    "revenue_growth": {
+      "value": 0.14,
+      "formatted": "+14%",
+      "description": "Year-over-year revenue growth",
+      "trend": "up",
+      "change": 0.02
+    }
+  }
+}

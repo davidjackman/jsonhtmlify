@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Sales Report Dashboard</title>
+<style>
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 40px;
+        background-color: #f8f9fa;
+    }
+    
+    h1 {
+        color: #2c3e50;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    
+    .sales-report {
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        overflow: hidden;
+        margin: 0 auto;
+        max-width: 800px;
+    }
+    
+    .sales-report th {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 15px;
+        text-align: left;
+        font-weight: 600;
+    }
+    
+    .sales-report td {
+        padding: 12px 15px;
+        border-bottom: 1px solid #e9ecef;
+    }
+    
+    .sales-report.striped tr:nth-child(even) {
+        background-color: #f8f9fa;
+    }
+    
+    .footer {
+        text-align: center;
+        margin-top: 20px;
+        color: #6c757d;
+        font-size: 14px;
+    }
+    
+</style>
+</head>
+<body>
+
+    <h1>Q1 2025 Sales Report</h1>
+    <table class="sales-report striped responsive">
+  <thead>
+    <tr>
+      <th>Quarter</th>
+      <th>Revenue</th>
+      <th>Growth %</th>
+      <th>Product Category</th>
+      <th>Units Sold</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="even">
+      <td>Q1 2025</td>
+      <td>125000</td>
+      <td>+12%</td>
+      <td>Electronics</td>
+      <td>450</td>
+    </tr>
+    <tr class="odd">
+      <td>Q1 2025</td>
+      <td>45000</td>
+      <td>+8%</td>
+      <td>Accessories</td>
+      <td>890</td>
+    </tr>
+    <tr class="even">
+      <td>Q1 2025</td>
+      <td>78000</td>
+      <td>+15%</td>
+      <td>Software</td>
+      <td>234</td>
+    </tr>
+  </tbody>
+</table>
+    <div class="footer">
+        Generated on June 19, 2025
+    </div>
+    
+</body>
+</html>
